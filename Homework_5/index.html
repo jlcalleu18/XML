@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- download jQuery from Google CDN -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script type="text/javascript">
+      function runjQuery() {
+        $.ajax({
+          //set the parameters
+          url: "Hwk5.php",
+          success: function (serverdata) {
+            //display serverdata at the div
+            $("#showoutput").html(serverdata);
+          },
+        });
+      }
+    </script>
+  </head>
+
+  <body onload="runjQuery()">
+    <h2>National Books Awards - 2020</h2>
+    <div id="showoutput"></div>
+
+    <div style="text-align: center"></div>
+  </body>
+</html>

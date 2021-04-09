@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript">
+        function showdate() {
+            //showing today's date inside of the paragrah
+            //use DOM(Document object Model)
+            var todaysdate = new Date();
+            window.document.getElementById("displaydate").innerHTML = todaysdate;
+        }
+
+        function showgreeting() {
+            alert("Hello CST3519_OL50");
+
+            //display greeting below the button
+            //using DOM (Document Object Model)
+            document.getElementById("showgreetinghere").innerHTML =
+                "Hello CST3519_OL50";
+
+            document.getElementById("nameTxtBx").focus();
+        }
+
+        function displaywelcome() {
+            //read input name
+            var inputName = document.getElementById("nameTxtBx").value;
+
+            //Display welcome inside of the text box
+            document.getElementById("showwelcome").value =
+                "Welcome " + inputName + " to CST3519_OL50";
+
+            //set the focus to login username textbox
+            document.getElementById("usernameTxtBx").focus();
+        }
+
+        function validateform() {
+            //Read inputs
+            var inputUsername = document.getElementById("usernameTxtBx").value;
+            var inputPwd = document.getElementById("pwdTxtBx").value;
+            if (inputUsername !== "" && inputPwd !== "") return true;
+            else {
+                alert("Invalid entries");
+                return false;
+            }
+        }
+    </script>
+</head>
+
+<body onload="showdate()">
+    <!-- placeholder fro date -->
+    <p id="displaydate" align="right"></p>
+    <h2>Web Application 1</h2>
+    <button onclick="showgreeting();">ClickMe!!</button>
+    <p></p>
+    <!-- create a placeholder to display the greeting -->
+    <div id="showgreetinghere"></div>
+
+    Name:<input type="text" id="nameTxtBx" name="nameTxtBx" autofocus onchange="displaywelcome();" />
+    <p></p>
+    <!-- Placeholder to display welcome -->
+    <input type="text" id="showwelcome" size="50" />
+
+    <!-- Login App -->
+    <h2>Login App</h2>
+    <form action="checkcredentials.php" onsubmit="return validateform();">
+        <p></p>
+        UserName:<input type="text" id="usernameTxtBx" name="usernameTxtBx" autofocus />&nbsp;&nbsp; Password:<input type="password" id="pwdTxtBx" name="pwdTxtBx" />
+        <p></p>
+
+        <input type="submit" value="Submit" />
+    </form>
+</body>
+
+</html>
