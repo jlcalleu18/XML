@@ -30,15 +30,11 @@ print"User's search: ".$searchText;
 
     //is there any records 
     $numrecs = mysqli_num_rows($results);
-    $firstrec = true;//display table
-    $maximages = 5; //maxnumber of the image
-    $imagenumber = 1; //to display table row
-    $count = 1;
+    
     if ($numrecs > 0) {
-        if ($firstrec == true){
-            print "<table border = '1'>";
-            $firstrec = false;
-        } 
+
+        print "<table border = '1'>";
+        
         print "<tr>";
             print"<th>Id</th>";
             print"<th>College</th>";
@@ -50,9 +46,7 @@ print"User's search: ".$searchText;
             print"<th>Website</th>";
         print "</tr>";
             while ($recordArray = mysqli_fetch_row($results)) {
-               if ($imagenumber ==1) {
-                print "<tr>";              
-                
+
                 //extracting field's values
                 $id = $recordArray[0];
                 $collge = $recordArray[1];
@@ -63,8 +57,9 @@ print"User's search: ".$searchText;
                 $telephone = $recordArray[6];
                 $website = $recordArray[7];
                 //string variable that holds all book's information
-                $collegesdata = $id.",".$collge.",".$address.",".$city.",".$state.",".$zipcode.",".$telephone.",".$website;
+                // $collegesdata = $id.",".$collge.",".$address.",".$city.",".$state.",".$zipcode.",".$telephone.",".$website;
 
+                print "<tr>";   
                 print"<td>$id</td>";
                 print"<td>$collge</td>";
                 print"<td>$address</td>";
@@ -72,12 +67,14 @@ print"User's search: ".$searchText;
                 print"<td>$state</td>";
                 print"<td>$zipcode</td>";
                 print"<td>$telephone</td>";
-                print"<td>$website</td>";
-            }
+                print"<td><a href=".$website.">$website</a></td>";
+           
             print "</tr>";
         }
 
         print "</table>";
+    } else {
+        print" No record(s) found";
     }
     // else print " No record(s) found";
 

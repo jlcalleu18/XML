@@ -20,13 +20,15 @@
             },
           });
         } else {
+          $("#showoutput").text("");
         }
       }
     </script>
   </head>
   <body onload="runjQuery()">
     <h2>Cuny Colleges Data</h2>
-    Search: <input type="text" id="searchTxtBx" onchange="runjQuery()" />
+    Search:
+    <input type="text" id="searchTxtBx" autofocus onchange="runjQuery()" />
     <p></p>
     <div id="showoutput"></div>
   </body>
