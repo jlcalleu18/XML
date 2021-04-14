@@ -17,7 +17,7 @@ print"User's search: ".$searchText;
     //print"connected";
 
     //create a string variable that holds the SQL command
-    $SQLselect = "SELECT * FROM " . $databaseTable." WHERE MATCH(college,address,city,state,zipcode,telephone,website) "."AGAINST ('".$searchText."' IN NATURAL LANGUAGE MODE)"." ORDER BY ".$databaseTable."."."id";
+    $SQLselect = "SELECT * FROM " . $databaseTable." WHERE MATCH(college,address,city,state,zipcode,telephone,website) "."AGAINST ('".$searchText."' IN NATURAL LANGUAGE MODE)";
     
     //$SQLselect = "select authorImage from " . $databaseTable;
     
@@ -36,7 +36,6 @@ print"User's search: ".$searchText;
         print "<table border = '1'>";
         
         print "<tr>";
-            print"<th>Id</th>";
             print"<th>College</th>";
             print"<th>Address</th>";
             print"<th>City</th>";
@@ -60,7 +59,6 @@ print"User's search: ".$searchText;
                 // $collegesdata = $id.",".$collge.",".$address.",".$city.",".$state.",".$zipcode.",".$telephone.",".$website;
 
                 print "<tr>";   
-                print"<td>$id</td>";
                 print"<td>$collge</td>";
                 print"<td>$address</td>";
                 print"<td>$city</td>";
@@ -68,7 +66,6 @@ print"User's search: ".$searchText;
                 print"<td>$zipcode</td>";
                 print"<td>$telephone</td>";
                 print"<td><a href=".$website.">$website</a></td>";
-           
             print "</tr>";
         }
 
