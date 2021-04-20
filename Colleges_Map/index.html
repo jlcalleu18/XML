@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CUNNY Colleges</title>
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- Download jQuery from google CDN(Content Delivery Network) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script type="text/javascript">
+      function runJQuery() {
+        //set the parameters
+        $.ajax({
+          url: 'populateselect.php',
+          success: function (serverdata) {
+            $('#showselect').html(serverdata);
+          },
+        });
+      }
+    </script>
+  </head>
+  <body onload="runJQuery();">
+    <h2 class="h2">CUNNY Colleges Locations</h2>
+    <p></p>
+    College: <span id="showselect"></span>
+    <p></p>
+    <div class="container" onload="initMap()">
+      <div id="showmap"></div>
+    </div>
+  </body>
+</html>
