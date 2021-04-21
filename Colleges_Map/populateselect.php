@@ -89,15 +89,14 @@ function initMap() {
         "<caption>"+phone[i]+"</caption>"+
         "<p><b>Website: </b><a href="+website[i]+">"+website[i]+"</a></p>"
     '</div>'
-    
-    
-    
     ;
         const infowindow = new google.maps.InfoWindow({
         content: contentString,
         });
 
+    let index = i.toString();
     const marker = new google.maps.Marker({
+        label: index,
         position: myLatLng,
         map,
         title: "Hello World!",
