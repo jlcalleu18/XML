@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CUNNY Colleges</title>
+    <link rel="stylesheet" href="./style.css" />
+
+    <!-- Download jQuery from google CDN(Content Delivery Network) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script> -->
+
+    <!-- Download google maps API -->
+    <script
+      async
+      defer
+      type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDj9WjXBxLnXy-tEn0PrhD2O9QQhqL3fyY"
+    ></script>
+    <script type="text/javascript">
+      function runJQuery() {
+        //set the parameters
+        $.ajax({
+          url: "populateselect.php",
+          success: function (serverdata) {
+            $("#showselect").html(serverdata);
+          },
+        });
+      }
+      function mapCollege() {
+        //read selection
+        var selectOption = $("#collegeList").val();
+        // alert(selectOption);
+        //extraction individual values from string selectOption
+        var id = selectOption.split(",")[0];
+        var collegetype = selectOption.split(",")[1];
+        var college = selectOption.split(",")[2];
+        var website = selectOption.split(",")[3];
+        var address = selectOption.split(",")[4];
+        var city = selectOption.split(",")[5];
+        var state = selectOption.split(",")[6];
+        var zipcode = selectOption.split(",")[7];
+        var latitude = selectOption.split(",")[8];
+        var longitude = selectOption.split(",")[9];
+        var phone = selectOption.split(",")[10];
+
+        //create a map
+        var newmap = new google.maps.Map(document.getElementById("showmap"), {
+          zoom: 10,
+        });
+
+        //set the type of map
+        newmap.setMapTypeId(google.maps.MapTypeId.ROADMAP);
+
+        //Set the bound of the map
+        var bounds = new google.maps.LatLngBounds();
+
+        //College position in the map
+        var collegePosition = new google.maps.LatLng(latitude, longitude);
+
+        //create a marker
+        var marker = new google.maps.Marker({
+          label: id,
+          position: collegePosition,
+          map: newmap,
+        });
+        //create a location where the marker will be placed
+        var loc = new google.maps.LatLng(
+          marker.position.lat(),
+          marker.position.lng()
+        );
+
+        //include this location in the bounds
+        bounds.extend(loc);
+
+        //set the center of the map arround the college position
+        newmap.setCenter(collegePosition);
+
+        //set zoom
+        // newmap = setZoom(13);
+
+        //fit the map within the bounds
+        newmap.fitBounds(bounds); //autozoom
+        newmap.panToBounds(bounds);
+      }
+    </script>
+  </head>
+  <body onload="runJQuery();">
+    <h2 class="h2">CUNNY Colleges Locations</h2>
+    <p></p>
+    College: <span id="showselect"></span>
+    <p></p>
+
+    <div class="container">
+      <div id="showmap"></div>
+    </div>
+  </body>
+</html>
