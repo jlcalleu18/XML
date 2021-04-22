@@ -2,8 +2,6 @@
 <html lang="en">
 <head>
     <title>Document</title>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-    <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
 <?php
@@ -32,84 +30,36 @@
     //is there any records 
     $numrecs = mysqli_num_rows($results);
 
+    if ($numrecs > 0) {
+        print "<select id='collegeList' onchange='mapCollege()'>";
+        print "<option value=''>Select a College...</option>";
 
+        //loop through the matching record(s)
+        while ($recordArray = mysqli_fetch_row($results)) {
 
+            //extracting field's values
+            $id = $recordArray[0];
+            $colletype = $recordArray[1];
+            $college = $recordArray[2];
+            $website = $recordArray[3];
+            $address = $recordArray[4];
+            $city = $recordArray[5];
+            $state = $recordArray[6];
+            $zipcode = $recordArray[7];
+            $latitude = $recordArray[8];
+            $longitude = $recordArray[9];
+            $phone = $recordArray[10];
 
-    echo '<select id="mySelect" onchange="initMap()">';
-    while ($recordArray = mysqli_fetch_row($results)) {
+            //passing Variable
+            $passingInfo = $id.",".$colletype.",".$college.",".$website.",".$address.",".$city.",".$state.",".$zipcode.",".$latitude.",".$longitude.",".$phone;
 
-        //extracting field's values
-        $id = $recordArray[0];
-        $colletype = $recordArray[1];
-        $college = $recordArray[2];
+            print "<option value='".$passingInfo."'>$college</option>";        
+    }
+        print "</select>";
+    }else {
+        print "No record(s) found";
+    }
 
-        $collegeName[] = $college;
-        $website[] = $recordArray[3];
-        $address[] = $recordArray[4];
-        $city[] = $recordArray[5];
-        $state[] = $recordArray[6];
-        $zipcode[] = $recordArray[7];
-        $latitude[] = $recordArray[8];
-        $longitude[] = $recordArray[9];
-        $phone[] = $recordArray[10];
-        //string variable that holds all book's information
-        // $collegesdata = $id.",".$collge.",".$address.",".$city.",".$state.",".$zipcode.",".$telephone.",".$website;
-        
-        print "<option value=".$id.">$college</option>";        
-}
-    echo "</select>";
-?>    
-<script>
-let map;
-function initMap() {
-    let value = document.getElementById("mySelect").value;
-    let i = value -1;
-    let college = <?php echo json_encode($collegeName); ?>;
-    let address = <?php echo json_encode($address); ?>;
-    let city = <?php echo json_encode($city); ?>;
-    let state = <?php echo json_encode($state); ?>;
-    let zipcode = <?php echo json_encode($zipcode); ?>;
-    let lat = <?php echo json_encode($latitude); ?>;
-    let long = <?php echo json_encode($longitude); ?>;
-    let phone = <?php echo json_encode($phone); ?>;
-    let website = <?php echo json_encode($website); ?>;
-
-
-
-    const myLatLng = { lat: parseFloat(lat[i]), lng: parseFloat(long[i]) };
-        map = new google.maps.Map(document.getElementById('showmap'), {
-        zoom: 15,
-        center: myLatLng,
-        });
-
-    const contentString = 
-    '<div>'+
-        "<h2>"+college[i]+"</h2>"+
-        "<p>"+address[i]+"," +city[i]+", <span>"+state[i]+", </span> <span>"+zipcode[i]+"</span></p>"+
-        "<caption>"+phone[i]+"</caption>"+
-        "<p><b>Website: </b><a href="+website[i]+">"+website[i]+"</a></p>"
-    '</div>'
-    ;
-        const infowindow = new google.maps.InfoWindow({
-        content: contentString,
-        });
-
-    let index = i.toString();
-    const marker = new google.maps.Marker({
-        label: index,
-        position: myLatLng,
-        map,
-        title: "Hello World!",
-    });
-
-    marker.addListener("click", () => {
-        infowindow.open(map, marker);
-    });
-}
-</script>
-<script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDj9WjXBxLnXy-tEn0PrhD2O9QQhqL3fyY&callback=initMap&libraries=&v=weekly"
-    async
-></script>
+?>   
 </body>
 </html>

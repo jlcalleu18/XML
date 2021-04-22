@@ -10,28 +10,24 @@
     <!-- Download jQuery from google CDN(Content Delivery Network) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-    <script type="text/javascript">
-      function runJQuery() {
-        //set the parameters
-        $.ajax({
-          url: "populateselect.php",
-          success: function (serverdata) {
-            $("#showselect").html(serverdata);
-          },
-        });
-      }
-    </script>
+    <!-- Download google maps API -->
+    <script
+      async
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDj9WjXBxLnXy-tEn0PrhD2O9QQhqL3fyY"
+    ></script>
   </head>
   <body onload="runJQuery();">
-    <div class="text">
-      <h2>CUNNY Colleges Locations</h2>
-      <p></p>
-      College: <span id="showselect"></span>
-      <p></p>
-    </div>
-    <div class="container" onload="initMap()">
-      <div id="showmap"></div>
-      <p>Check college map</p>
-    </div>
+    <header></header>
+    <main>
+      <section class="text">
+        <h2>CUNNY Colleges Locations</h2>
+        <p>College: <span id="showselect"></span></p>
+      </section>
+      <section class="container">
+        <div id="showmap"></div>
+      </section>
+    </main>
+    <footer></footer>
+    <script src="script.js"></script>
   </body>
 </html>
