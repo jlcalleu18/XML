@@ -14,9 +14,9 @@
       function runJQuery() {
         //set the parameters
         $.ajax({
-          url: 'populateselect.php',
+          url: "populateselect.php",
           success: function (serverdata) {
-            $('#showselect').html(serverdata);
+            $("#showselect").html(serverdata);
           },
         });
       }
