@@ -59,7 +59,6 @@
     }else {
         print "No record(s) found";
     }
-
 ?>    
 </body>
 </html>

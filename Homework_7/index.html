@@ -1,38 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CUNNY Colleges</title>
-    <link rel="stylesheet" href="./style.css" />
-
-    <!-- Download jQuery from google CDN(Content Delivery Network) -->
+    <!-- download jQuery from Google CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script> -->
-
-    <!-- Download google maps API -->
+    <!-- download Google Maps API -->
     <script
       async
-      defer
-      type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDj9WjXBxLnXy-tEn0PrhD2O9QQhqL3fyY"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXpMDT8Snwtmb8NsTM7fi3QT00U2N5KMg"
     ></script>
     <script type="text/javascript">
-      function runJQuery() {
-        //set the parameters
+      function runjQuery() {
         $.ajax({
+          //setup parameters
           url: "populateselect.php",
           success: function (serverdata) {
             $("#showselect").html(serverdata);
           },
         });
-      }
+      } //end of function runjQuery()
       function mapCollege() {
-        //read selection
+        //getting the passing values (from PHP to HTML)
         var selectOption = $("#collegeList").val();
-        // alert(selectOption);
-        //extraction individual values from string selectOption
+        //extracting individual values from string selectOption
         var id = selectOption.split(",")[0];
         var collegetype = selectOption.split(",")[1];
         var college = selectOption.split(",")[2];
@@ -44,56 +33,62 @@
         var latitude = selectOption.split(",")[8];
         var longitude = selectOption.split(",")[9];
         var phone = selectOption.split(",")[10];
-
-        //create a map
-        var newmap = new google.maps.Map(document.getElementById("showmap"), {
-          zoom: 10,
-        });
-
-        //set the type of map
+        //variable to be displayed in the popup window when the user clicks on the map marker
+        var contentString =
+          collegetype +
+          "<br/>" +
+          college +
+          "<br/>" +
+          address +
+          ", " +
+          city +
+          ", " +
+          state +
+          " " +
+          zipcode +
+          "<br/>" +
+          phone +
+          "<br/>" +
+          "<a href='" +
+          website +
+          "'>" +
+          website +
+          "</a>";
+        //let's map the selected college, first clear the placeholder for new mapping
+        $("#showmap").empty();
+        //let's create a map
+        var newmap = new google.maps.Map(document.getElementById("showmap"));
+        //set the zoom
+        newmap.setZoom(13);
+        //set map type: ROADMAP
         newmap.setMapTypeId(google.maps.MapTypeId.ROADMAP);
-
-        //Set the bound of the map
-        var bounds = new google.maps.LatLngBounds();
-
-        //College position in the map
-        var collegePosition = new google.maps.LatLng(latitude, longitude);
-
+        //set college position with its coordinates
+        selectCollege = new google.maps.LatLng(latitude, longitude);
         //create a marker
         var marker = new google.maps.Marker({
+          //set up parameters
           label: id,
-          position: collegePosition,
+          position: selectCollege,
           map: newmap,
         });
-        //create a location where the marker will be placed
-        var loc = new google.maps.LatLng(
-          marker.position.lat(),
-          marker.position.lng()
-        );
-
-        //include this location in the bounds
-        bounds.extend(loc);
-
-        //set the center of the map arround the college position
-        newmap.setCenter(collegePosition);
-
-        //set zoom
-        // newmap = setZoom(13);
-
-        //fit the map within the bounds
-        newmap.fitBounds(bounds); //autozoom
-        newmap.panToBounds(bounds);
-      }
+        //center the map at the selectCollege
+        newmap.setCenter(selectCollege);
+        //create popup window (of class InfoWindow()) that will appear after user clicks on the marker
+        const infowindow = new google.maps.InfoWindow();
+        //add a Listener to the infowindow (detect click/touch)
+        marker.addListener("click", function () {
+          infowindow.setContent(contentString);
+          //open infowindow
+          infowindow.open(newmap, marker);
+        });
+      } //end of function displaymap()
     </script>
   </head>
-  <body onload="runJQuery();">
-    <h2 class="h2">CUNNY Colleges Locations</h2>
+  <body onload="runjQuery();">
+    <h2>CUNY Colleges Map</h2>
     <p></p>
-    College: <span id="showselect"></span>
+    Colleges: <span id="showselect"></span>
     <p></p>
-
-    <div class="container">
-      <div id="showmap"></div>
-    </div>
+    <div id="showmap" style="height: 600px; width: 100%"></div>
   </body>
 </html>
