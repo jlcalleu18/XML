@@ -29,10 +29,11 @@
 
     //is there any records 
     $numrecs = mysqli_num_rows($results);
-
+    $initialValues = "1,initial";
     if ($numrecs > 0) {
         print "<select id='collegeList' onchange='mapCollege()'>";
-        print "<option value=''>Select a College...</option>";
+        print "<option value='' selected disabled hidde>Select a College...</option>";
+       // print "<option value='".$initialValues."'>Select a College...</option>";
 
         //loop through the matching record(s)
         while ($recordArray = mysqli_fetch_row($results)) {

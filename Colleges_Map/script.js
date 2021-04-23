@@ -10,6 +10,7 @@ function runJQuery() {
 function mapCollege() {
     //read selection
     let selectOption = $("#collegeList").val();
+    //console.log(selectOption);
     // alert(selectOption);
     //extraction individual values from string selectOption
     let id = selectOption.split(",")[0];
@@ -31,10 +32,10 @@ function mapCollege() {
         lng: parseFloat(longitude),
     };
     map = new google.maps.Map(document.getElementById("showmap"), {
-        zoom: 16,
+        zoom: 15.5,
         center: myLatLng,
+        
     });
-
     const contentString =
         '<div id="content">' +
         "<p>"+
