@@ -1,0 +1,41 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html {
+  font-size: 62.5%;
+}
+body {
+  font-size: 1.6rem;
+}
+.text {
+  margin: 3% auto 0 auto;
+  width: 90%;
+}
+.text h2 {
+  text-align: center;
+}
+#collegeList {
+  font-size: 1.5rem;
+}
+.container {
+  margin: 1% auto;
+  height: 75vh;
+  width: 90%;
+}
+#map {
+  height: 100%;
+  width: 100%;
+}
+
+#content {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.5rem;
+}
+#floating-panel {
+  text-align: center;
+  font-family: "Roboto", "sans-serif";
+}
