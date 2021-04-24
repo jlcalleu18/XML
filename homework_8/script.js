@@ -76,8 +76,8 @@ function initMap() {
     }
     let map = new google.maps.Map(document.getElementById('map'), options);
 
-    let id; 
-    
+    let id;
+
     for (let i = 0; i < obj.length; i++) {
         id = obj[i][0];
         let college = obj[i][2];
@@ -99,9 +99,9 @@ function initMap() {
                 city + ", " + state + ", " + zipcode +
                 "<br />" + phone + "<br />" +
                 "</p>" +
-                "<p><b>Website: </b><a href=" + website + ">" + website + "</a></p>"+
-            '</div>'
-    });
+                "<p><b>Website: </b><a href=" + website + ">" + website + "</a></p>" +
+                '</div>'
+        });
     }
     function addMarker(props) {
         const marker = new google.maps.Marker({
@@ -119,28 +119,28 @@ function initMap() {
         }
     }
     const geocoder = new google.maps.Geocoder();
-  document.getElementById("submit").addEventListener("click", () => {
-    geocodeAddress(geocoder, map);
-  });
+    document.getElementById("submit").addEventListener("click", () => {
+        geocodeAddress(geocoder, map);
+    });
 
 }
 function geocodeAddress(geocoder, resultsMap) {
     const address = document.getElementById("address").value;
     geocoder.geocode({ address: address }, (results, status) => {
-      if (status === "OK") {
-        resultsMap.setCenter(results[0].geometry.location);
-        let lat=results[0].geometry.location.lat();
-        let long=results[0].geometry.location.lng();
-        console.log(lat);
-        new google.maps.Marker({
-          map: resultsMap,
-          position: results[0].geometry.location,
-        });
-      } else {
-        alert("Geocode was not successful for the following reason: " + status);
-      }
+        if (status === "OK") {
+            resultsMap.setCenter(results[0].geometry.location);
+            let lat = results[0].geometry.location.lat();
+            let long = results[0].geometry.location.lng();
+            console.log(lat);
+            new google.maps.Marker({
+                map: resultsMap,
+                position: results[0].geometry.location,
+            });
+        } else {
+            alert("Geocode was not successful for the following reason: " + status);
+        }
     });
-  }
+}
 initMap();
 
 
