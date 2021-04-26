@@ -72,6 +72,7 @@ function geocodeAddress(geocoder, resultsMap) {
             let lat = results[0].geometry.location.lat();
             let long = results[0].geometry.location.lng();
             console.log(lat);
+            console.log(long);
             new google.maps.Marker({
                 map: resultsMap,
                 position: results[0].geometry.location,
