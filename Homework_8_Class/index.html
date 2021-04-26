@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- download jQuery from Google CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- download Google Maps API -->
+    <script
+      async
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXpMDT8Snwtmb8NsTM7fi3QT00U2N5KMg"
+    ></script>
+    <script type="text/javascript">
+      function runjQuery() {
+        //get inputs: address and distance
+        let inputAdress = $("#adressTxtBx").val();
+        let inputDistance = $("#distanceList").val();
+        console.log(inputAdress);
+        console.log(inputDistance);
+
+        //Valitation address and distance
+        if (inputAdress != "" && inputDistance != "") {
+          $.ajax({
+            //setup parameters
+            url: "Hmk8.php",
+            data: "addressKey=" + inputAdress + "&distanceKey=" + inputDistance,
+            success: function (serverdata) {
+              $("#showmap").html(serverdata);
+            },
+          });
+        } else {
+          alert("Please enter a valid address and a valid distance");
+          //set the focus to the text box
+          $("#adressTxtBx").focus();
+        }
+      } //end of function runjQuery()
+
+      function mapCollege() {
+        //getting the passing values (from PHP to HTML)
+        var selectOption = $("#collegeList").val();
+        //extracting individual values from string selectOption
+        var id = selectOption.split(",")[0];
+        var collegetype = selectOption.split(",")[1];
+        var college = selectOption.split(",")[2];
+        var website = selectOption.split(",")[3];
+        var address = selectOption.split(",")[4];
+        var city = selectOption.split(",")[5];
+        var state = selectOption.split(",")[6];
+        var zipcode = selectOption.split(",")[7];
+        var latitude = selectOption.split(",")[8];
+        var longitude = selectOption.split(",")[9];
+        var phone = selectOption.split(",")[10];
+
+        //variable to be displayed in the popup window when the user clicks on the map marker
+        var contentString =
+          collegetype +
+          "<br/>" +
+          college +
+          "<br/>" +
+          address +
+          ", " +
+          city +
+          ", " +
+          state +
+          " " +
+          zipcode +
+          "<br/>" +
+          phone +
+          "<br/>" +
+          "<a href='" +
+          website +
+          "'>" +
+          website +
+          "</a>";
+        //let's map the selected college, first clear the placeholder for new mapping
+        $("#showmap").empty();
+        //let's create a map
+        var newmap = new google.maps.Map(document.getElementById("showmap"));
+        //set the zoom
+        newmap.setZoom(13);
+        //set map type: ROADMAP
+        newmap.setMapTypeId(google.maps.MapTypeId.ROADMAP);
+        //set college position with its coordinates
+        selectCollege = new google.maps.LatLng(latitude, longitude);
+        //create a marker
+        var marker = new google.maps.Marker({
+          //set up parameters
+          label: id,
+          position: selectCollege,
+          map: newmap,
+        });
+        //center the map at the selectCollege
+        newmap.setCenter(selectCollege);
+        //create popup window (of class InfoWindow()) that will appear after user clicks on the marker
+        const infowindow = new google.maps.InfoWindow();
+        //add a Listener to the infowindow (detect click/touch)
+        marker.addListener("click", function () {
+          infowindow.setContent(contentString);
+          //open infowindow
+          infowindow.open(newmap, marker);
+        });
+      } //end of function displaymap()
+    </script>
+  </head>
+  <body>
+    <h2>CUNY Colleges Near an Address</h2>
+    <p></p>
+    Address:
+    <input
+      type="text"
+      id="adressTxtBx"
+      autofocus
+      size="50"
+      autocomplete="address-line1"
+    />
+    &nbsp;&nbsp;&nbsp; Minimum Distance (Miles):
+    <select id="distanceList" onchange="runjQuery()">
+      <option value="">Select a Distance</option>
+      <option value="5">5 miles</option>
+      <option value="10">10 miles</option>
+      <option value="15">15 miles</option>
+      <option value="20">20 miles</option>
+      <option value="50">50 miles</option>
+    </select>
+    <p></p>
+    <div id="showmap" style="height: 600px; width: 100%"></div>
+  </body>
+</html>
