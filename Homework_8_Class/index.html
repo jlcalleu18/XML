@@ -18,86 +18,109 @@
 
         //Valitation address and distance
         if (inputAdress != "" && inputDistance != "") {
-          $.ajax({
-            //setup parameters
-            url: "Hmk8.php",
-            data: "addressKey=" + inputAdress + "&distanceKey=" + inputDistance,
-            success: function (serverdata) {
-              $("#showmap").html(serverdata);
-            },
-          });
+          //get address' coordinates (latitude, longitude)
+          //use Google's Geocorder()
+          const geocoder = new google.maps.Geocoder();
+          geocoder.geocode(
+            { address: inputAdress },
+            function (results, status) {
+              if (status == google.maps.GeocoderStatus.OK) {
+                let coordinates = results[0].geometry.location;
+                let lati = coordinates.lat();
+                let long = coordinates.lng();
+
+                $.ajax({
+                  //setup parameters
+                  url: "Hmk8.php",
+                  data:
+                    "latKey=" +
+                    lati +
+                    "&longKey=" +
+                    long +
+                    "&distanceKey=" +
+                    inputDistance,
+                  success: function (serverdata) {
+                    $("#showmap").html(serverdata);
+                    //selecting values from response Object
+                  },
+                });
+              } else {
+                alert("user address not found");
+              }
+            }
+          );
         } else {
           alert("Please enter a valid address and a valid distance");
           //set the focus to the text box
           $("#adressTxtBx").focus();
         }
-      } //end of function runjQuery()
+      }
 
-      function mapCollege() {
-        //getting the passing values (from PHP to HTML)
-        var selectOption = $("#collegeList").val();
-        //extracting individual values from string selectOption
-        var id = selectOption.split(",")[0];
-        var collegetype = selectOption.split(",")[1];
-        var college = selectOption.split(",")[2];
-        var website = selectOption.split(",")[3];
-        var address = selectOption.split(",")[4];
-        var city = selectOption.split(",")[5];
-        var state = selectOption.split(",")[6];
-        var zipcode = selectOption.split(",")[7];
-        var latitude = selectOption.split(",")[8];
-        var longitude = selectOption.split(",")[9];
-        var phone = selectOption.split(",")[10];
+      // function mapCollege() {
+      //   //getting the passing values (from PHP to HTML)
+      //   var selectOption = $("#collegeList").val();
 
-        //variable to be displayed in the popup window when the user clicks on the map marker
-        var contentString =
-          collegetype +
-          "<br/>" +
-          college +
-          "<br/>" +
-          address +
-          ", " +
-          city +
-          ", " +
-          state +
-          " " +
-          zipcode +
-          "<br/>" +
-          phone +
-          "<br/>" +
-          "<a href='" +
-          website +
-          "'>" +
-          website +
-          "</a>";
-        //let's map the selected college, first clear the placeholder for new mapping
-        $("#showmap").empty();
-        //let's create a map
-        var newmap = new google.maps.Map(document.getElementById("showmap"));
-        //set the zoom
-        newmap.setZoom(13);
-        //set map type: ROADMAP
-        newmap.setMapTypeId(google.maps.MapTypeId.ROADMAP);
-        //set college position with its coordinates
-        selectCollege = new google.maps.LatLng(latitude, longitude);
-        //create a marker
-        var marker = new google.maps.Marker({
-          //set up parameters
-          label: id,
-          position: selectCollege,
-          map: newmap,
-        });
-        //center the map at the selectCollege
-        newmap.setCenter(selectCollege);
-        //create popup window (of class InfoWindow()) that will appear after user clicks on the marker
-        const infowindow = new google.maps.InfoWindow();
-        //add a Listener to the infowindow (detect click/touch)
-        marker.addListener("click", function () {
-          infowindow.setContent(contentString);
-          //open infowindow
-          infowindow.open(newmap, marker);
-        });
-      } //end of function displaymap()
+      //   //extracting individual values from string selectOption
+      // var id = selectOption.split(",")[0];
+      // var collegetype = selectOption.split(",")[1];
+      // var college = selectOption.split(",")[2];
+      // var website = selectOption.split(",")[3];
+      // var address = selectOption.split(",")[4];
+      // var city = selectOption.split(",")[5];
+      // var state = selectOption.split(",")[6];
+      // var zipcode = selectOption.split(",")[7];
+      // var latitude = selectOption.split(",")[8];
+      // var longitude = selectOption.split(",")[9];
+      // var phone = selectOption.split(",")[10];
+      //   //variable to be displayed in the popup window when the user clicks on the map marker
+      //   var contentString =
+      //     collegetype +
+      //     "<br/>" +
+      //     college +
+      //     "<br/>" +
+      //     address +
+      //     ", " +
+      //     city +
+      //     ", " +
+      //     state +
+      //     " " +
+      //     zipcode +
+      //     "<br/>" +
+      //     phone +
+      //     "<br/>" +
+      //     "<a href='" +
+      //     website +
+      //     "'>" +
+      //     website +
+      //     "</a>";
+      //   //let's map the selected college, first clear the placeholder for new mapping
+      //   $("#showmap").empty();
+      //   //let's create a map
+      //   var newmap = new google.maps.Map(document.getElementById("showmap"));
+      //   //set the zoom
+      //   newmap.setZoom(13);
+      //   //set map type: ROADMAP
+      //   newmap.setMapTypeId(google.maps.MapTypeId.ROADMAP);
+      //   //set college position with its coordinates
+      //   selectCollege = new google.maps.LatLng(latitude, longitude);
+      //   //create a marker
+      //   var marker = new google.maps.Marker({
+      //     //set up parameters
+      //     label: id,
+      //     position: selectCollege,
+      //     map: newmap,
+      //   });
+      //   //center the map at the selectCollege
+      //   newmap.setCenter(selectCollege);
+      //   //create popup window (of class InfoWindow()) that will appear after user clicks on the marker
+      //   const infowindow = new google.maps.InfoWindow();
+      //   //add a Listener to the infowindow (detect click/touch)
+      //   marker.addListener("click", function () {
+      //     infowindow.setContent(contentString);
+      //     //open infowindow
+      //     infowindow.open(newmap, marker);
+      //   });
+      // } //end of function displaymap()
     </script>
   </head>
   <body>
@@ -109,7 +132,7 @@
       id="adressTxtBx"
       autofocus
       size="50"
-      autocomplete="address-line1"
+      autocomplete="street-address"
     />
     &nbsp;&nbsp;&nbsp; Minimum Distance (Miles):
     <select id="distanceList" onchange="runjQuery()">
@@ -120,7 +143,9 @@
       <option value="20">20 miles</option>
       <option value="50">50 miles</option>
     </select>
-    <p></p>
-    <div id="showmap" style="height: 600px; width: 100%"></div>
+    <p id="showmap"></p>
+    <div id="showmaps" style="height: 600px; width: 100%">
+      name: <span id="name"></span>
+    </div>
   </body>
 </html>
