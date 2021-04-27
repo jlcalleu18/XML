@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CUNNY Colleges</title>
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- Download jQuery from google CDN(Content Delivery Network) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- Download google maps API -->
+    <script
+      async
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDj9WjXBxLnXy-tEn0PrhD2O9QQhqL3fyY"
+    ></script>
+  </head>
+  <body>
+    <header class="text">
+      <h2>CUNY Colleges Near an Address</h2>
+    </header>
+    <main>
+      <section id="floating-panel">
+        <form>
+          <label for="address">Address:</label><br />
+          <input
+            type="text"
+            id="adressTxtBx"
+            autofocus
+            size="50"
+            autocomplete="street-address"
+          />
+        </form>
+        <select id="distanceList" onchange="runjQuery()">
+          <option value="">Select a Distance</option>
+          <option value="5">5 miles</option>
+          <option value="10">10 miles</option>
+          <option value="15">15 miles</option>
+          <option value="20">20 miles</option>
+          <option value="50">50 miles</option>
+        </select>
+      </section>
+      <section class="container">
+        <div id="map"></div>
+      </section>
+    </main>
+    <footer></footer>
+    <script src="script.js"></script>
+  </body>
+</html>
