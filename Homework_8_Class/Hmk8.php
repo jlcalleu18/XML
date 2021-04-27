@@ -1,16 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Document</title>
-</head>
-<body>
+
 <?php
     //get passing variables: address and distance
-    $latIn = $_GET["latKey"];
-    $longIn = $_GET["longKey"];
-    $distanceIn = $_GET["distanceKey"];
+    // $latIn = $_GET["latKey"];
+    // $longIn = $_GET["longKey"];
+    // $distanceIn = $_GET["distanceKey"];
+    $latIn = $_POST['lati'];
+    $longIn = $_POST['long'];
+    $distanceIn = $_POST['inputDistance'];
 
-    //print "Lat ".$latIn." long: ". $longIn." distance: ". $distanceIn;
+   // $data = array($latIn, $longIn, $distanceIn);
+    // $data = array("lat" => $latIn, "long" => $longIn, "dist" =>$distanceIn);
+   // echo json_encode($data);
+
     //connect to database: collegesmap_db
     //set up 4 parameters
     $server = "localhost";
@@ -57,41 +58,13 @@
             $phone = $recordArray[10];
             $distance = $recordArray[11];
 
-            //passing Variable
-            // $passingInfo = $id.",".$colletype.",".$college.",".$website.",".$address.",".$city.",".$state.",".$zipcode.",".$latitude.",".$longitude.",".$phone.",".$distanceIn;
-            $return_arr[] = array("id" => $id,
-            "colletype" => $colletype,
-            "college" => $college,
-            "website" => $website,
-            "address" => $address,
-            "city" => $city,
-            "state" => $state,
-            "zipcode" => $zipcode,
-            "latitude" => $latitude,
-            "longitude" => $longitude,
-            "phone" => $phone,
-            "distance" => $distanceIn,
-        );
+            $return_data = array($id, $colletype, $college, $website, $address, $city, $state, $zipcode, $latitude, $longitude, $phone, $distanceIn,);
                 
     }
-echo json_encode($return_arr);
+    echo json_encode($return_data);
+
     }else {
         print "No record(s) found";
     }
 
-    // echo json_encode ($id);
-    // echo json_encode ($colletype);
-    // echo json_encode ($college);
-    // echo json_encode ($website);
-    // echo json_encode ($address);
-    // echo json_encode ($city);
-    // echo json_encode ($state);
-    // echo json_encode ($zipcode);
-    // echo json_encode ($latitude);
-    // echo json_encode ($longitude);
-    // echo json_encode ($phone);
-    // echo json_encode ($distanceIn);
 ?>    
-
-</body>
-</html>
