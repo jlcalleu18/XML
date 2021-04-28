@@ -42,8 +42,9 @@
                     "&distanceKey=" +
                     inputDistance,
                   success: function (serverdata) {
-                    $("#showmap").html(serverdata);
-                    //selecting values from response Object
+                    //$("#showmap").html(serverdata);
+                    //call a funtion to map the college(s)
+                    mapCollege(serverdata);
                   },
                 });
               } else {
@@ -57,8 +58,85 @@
           $("#adressTxtBx").focus();
         }
       }
+      function mapCollege(collegeInfo) {
+        //getting the passing values (from PHP to HTML)
+        //college separated by ";"
+        //extracting individual values from string selectOption
+        var matchCollege = collegeInfo.split(";");
+
+        var totalrecs = matchCollege.length;
+        //displaynumber of matching colleges
+
+        $("#numColleges").html(totalrecs);
+
+        //let's map the matching colleges
+
+        for (let i = 0; i < totalrecs; i++) {
+          var id = matchCollege[i].split(",")[0];
+          var collegetype = matchCollege[i].split(",")[1];
+          var college = matchCollege[i].split(",")[2];
+          var website = matchCollege[i].split(",")[3];
+          var address = matchCollege[i].split(",")[4];
+          var city = matchCollege[i].split(",")[5];
+          var state = matchCollege[i].split(",")[6];
+          var zipcode = matchCollege[i].split(",")[7];
+          var latitude = matchCollege[i].split(",")[8];
+          var longitude = matchCollege[i].split(",")[9];
+          var phone = matchCollege[i].split(",")[10];
+          //variable to be displayed in the popup window when the user clicks on the map marker
+          var contentString =
+            collegetype +
+            "<br/>" +
+            college +
+            "<br/>" +
+            address +
+            ", " +
+            city +
+            ", " +
+            state +
+            " " +
+            zipcode +
+            "<br/>" +
+            phone +
+            "<br/>" +
+            "<a href='" +
+            website +
+            "'>" +
+            website +
+            "</a>";
+          //let's map the selected college, first clear the placeholder for new mapping
+          $("#showmap").empty();
+          //let's create a map
+          var newmap = new google.maps.Map(document.getElementById("showmap"));
+          //set the zoom
+          newmap.setZoom(13);
+          //set map type: ROADMAP
+          newmap.setMapTypeId(google.maps.MapTypeId.ROADMAP);
+          //set college position with its coordinates
+          selectCollege = new google.maps.LatLng(latitude, longitude);
+          //create a marker
+          var marker = new google.maps.Marker({
+            //set up parameters
+            label: id,
+            position: selectCollege,
+            map: newmap,
+          });
+          //center the map at the selectCollege
+          newmap.setCenter(selectCollege);
+          //create popup window (of class InfoWindow()) that will appear after user clicks on the marker
+          const infowindow = new google.maps.InfoWindow();
+          //add a Listener to the infowindow (detect click/touch)
+          marker.addListener("click", function () {
+            infowindow.setContent(contentString);
+            //open infowindow
+            infowindow.open(newmap, marker);
+          });
+          console.log(id);
+        }
+      } //end of function displaymap()
     </script>
   </head>
+
   <body>
     <h2>CUNY Colleges Near an Address</h2>
     <p></p>
@@ -68,18 +146,19 @@
       id="adressTxtBx"
       autofocus
       size="50"
-      autocomplete="street-address"
+      autocomplete="address"
     />
     &nbsp;&nbsp;&nbsp; Minimum Distance (Miles):
     <select id="distanceList" onchange="runjQuery()">
       <option value="">Select a Distance</option>
+      <option value="2">2 miles</option>
       <option value="5">5 miles</option>
       <option value="10">10 miles</option>
       <option value="15">15 miles</option>
       <option value="20">20 miles</option>
       <option value="50">50 miles</option>
     </select>
-    <p id="showmap"></p>
-    <div id="showmaps" style="height: 600px; width: 100%"></div>
+    &nbsp;&nbsp;&nbsp; Number of Near Colleges: <span id="numColleges"></span>
+    <div id="showmap" style="height: 600px; width: 100%"></div>
   </body>
 </html>
