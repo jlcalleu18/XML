@@ -1,14 +1,15 @@
 
 <?php
     //get passing variables: address and distance
-    // $latIn = $_GET["latKey"];
-    // $longIn = $_GET["longKey"];
-    // $distanceIn = $_GET["distanceKey"];
-    $latIn = $_POST['lati'];
-    $longIn = $_POST['long'];
-    $distanceIn = $_POST['inputDistance'];
+    $latIn = $_GET["latKey"];
+    $longIn = $_GET["longKey"];
+    $distanceIn = $_GET["distanceKey"];
+    // $latIn = $_POST['lati'];
+    // $longIn = $_POST['long'];
+    // $distanceIn = $_POST['inputDistance'];
 
-   // $data = array($latIn, $longIn, $distanceIn);
+    print "latitude: ".$latIn." longitude: ".$longIn." Distance: ".$distanceIn;
+    //$data = array($latIn, $longIn, $distanceIn);
     // $data = array("lat" => $latIn, "long" => $longIn, "dist" =>$distanceIn);
    // echo json_encode($data);
 
@@ -61,7 +62,7 @@
             $return_data = array($id, $colletype, $college, $website, $address, $city, $state, $zipcode, $latitude, $longitude, $phone, $distanceIn,);
                 
     }
-    echo json_encode($return_data);
+    // echo json_encode($return_data);
 
     }else {
         print "No record(s) found";

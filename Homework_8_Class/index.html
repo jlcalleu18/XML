@@ -30,41 +30,20 @@
                 let long = coordinates.lng();
                 console.log(lati);
                 console.log(long);
-                // $.ajax({
-                //   //setup parameters
-                //   type: "GET",
-                //   url: "Hmk8.php",
-                //   data:
-                //     "latKey=" +
-                //     lati +
-                //     "&longKey=" +
-                //     long +
-                //     "&distanceKey=" +
-                //     inputDistance,
-                //   dataType: "json",
-                //   success: function (serverdata) {
-                //     $("#showmap").html(serverdata);
-                //     //selecting values from response Object
-                //     data = serverdata;
-                //     console.log(data);
-                //   },
-                // });
-                var data = [];
                 $.ajax({
-                  type: "POST",
+                  //setup parameters
+                  type: "GET",
                   url: "Hmk8.php",
-                  data: {
-                    lati: lati,
-                    long: long,
-                    inputDistance: inputDistance,
-                  },
-                  cache: false,
-                  success: function (html) {
-                    data = $.parseJSON(html);
-                    console.log(data);
-                  },
-                  error: function (xhr, status, error) {
-                    console.error(xhr);
+                  data:
+                    "latKey=" +
+                    lati +
+                    "&longKey=" +
+                    long +
+                    "&distanceKey=" +
+                    inputDistance,
+                  success: function (serverdata) {
+                    $("#showmap").html(serverdata);
+                    //selecting values from response Object
                   },
                 });
               } else {
@@ -101,8 +80,6 @@
       <option value="50">50 miles</option>
     </select>
     <p id="showmap"></p>
-    <div id="showmaps" style="height: 600px; width: 100%">
-      name: <span id="name"></span>
-    </div>
+    <div id="showmaps" style="height: 600px; width: 100%"></div>
   </body>
 </html>
