@@ -1,4 +1,3 @@
-
 <?php
     //get passing variables: address and distance
     // $latIn = $_GET["latKey"];
@@ -7,10 +6,6 @@
     $latIn = $_POST['lati'];
     $longIn = $_POST['long'];
     $distanceIn = $_POST['inputDistance'];
-
-   // $data = array($latIn, $longIn, $distanceIn);
-    // $data = array("lat" => $latIn, "long" => $longIn, "dist" =>$distanceIn);
-   // echo json_encode($data);
 
     //connect to database: collegesmap_db
     //set up 4 parameters
@@ -27,8 +22,6 @@
     //print"connected";
 
     //create a string variable that holds the SQL command
-    //$SQLselect = "SELECT * FROM " . $databaseTable;
-
     $SQLselect = "SELECT *, ( 3959 * acos( cos( radians(".$latIn.") ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(".$longIn.") ) + sin( radians(".$latIn.") ) * sin(radians(latitude)) ) ) AS distance FROM collegesmap_table HAVING distance < ".$distanceIn;
     
     //to run the above SQL command = PHP has a funtion: mysqli_query()
@@ -60,12 +53,9 @@
 
             //$return_data = array($id, $colletype, $college, $website, $address, $city, $state, $zipcode, $latitude, $longitude, $phone, $distanceIn,);
             $passingInfo[] = $recordArray;
-            
-                
     }
     echo json_encode($passingInfo);
     }else {
         print "No record(s) found";
     }
-
 ?>    
