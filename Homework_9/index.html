@@ -1,6 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+
+    <title>Document</title>
+
     <!-- download jQuery from Google CDN -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
@@ -11,7 +17,7 @@
         if (searchInput != "") {
           $.ajax({
             //set the parameters
-            url: "search.php",
+            url: "stock.php",
             data: "searchKey=" + searchInput,
             // method: "POST",
             success: function (serverdata) {
@@ -25,8 +31,9 @@
       }
     </script>
   </head>
+
   <body>
-    <h2>Cuny Colleges Data</h2>
+    <h2>Stock list exchnagess</h2>
     Search:
     <input type="text" id="searchTxtBx" autofocus onchange="runjQuery()" />
     <p></p>
