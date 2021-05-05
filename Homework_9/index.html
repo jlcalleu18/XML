@@ -69,6 +69,41 @@
         } else {
         }
       }
+
+      // function getprice() {
+      //   //read the value of the selected company
+      //   var selectOption = $("#companyList").val();
+
+      //   if (selectOption != "") {
+      //     //get the price through the api
+      //     let url =
+      //       "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=" +
+      //       selectOption +
+      //       "&apikey=0QOS7RCBX2UGWAC3";
+
+      //     //use ajax agent to get the response
+      //     if (window.XMLHttpRequest) var agent = new XMLHttpRequest();
+      //     else var agent = new ActiveXObject("Microsoft.XMLHTTP");
+
+      //     //open file
+      //     agent.open("GET", url, true);
+      //     agent.send(null);
+
+      //     agent.onreadystatechange = function () {
+      //       if (agent.readyState == 4 && agent.status == 200) {
+      //         var serverResponse = agent.responseText;
+      //         $("#stockSymbol").html(selectOption);
+
+      //         //treat serverResponse as a big string with elements separated by ":"
+      //         //we are looking for close price
+      //         var closePrice = serverResponse.split(":")[12].split(",")[0];
+      //         closePrice = closePrice.substring(2, closePrice.length - 1);
+      //         $("#stockClose").html(closePrice);
+      //       }
+      //     };
+      //   } else {
+      //   }
+      // } //end of function getprice()
     </script>
   </head>
 
