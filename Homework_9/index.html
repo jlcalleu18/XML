@@ -29,78 +29,46 @@
           $("#searchTxtBx").focus();
         }
       } //end runjQuery
-      // function getprice() {
-      //   //read the value of the selected company
-      //   let selectOption = $("#companyList").val();
-      //   if (selectOption != "") {
-      //     //get the price trought the api
-      //     let url =
-      //       "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=" +
-      //       selectOption +
-      //       "&apikey=0QOS7RCBX2UGWAC3";
-      //     $.ajax({
-      //       url: url,
-      //       dataType: "json",
-      //       contentType: "application/json",
-      //       success: function (data) {
-      //         var symbol = data["Meta Data"]["2. Symbol"];
-      //         var lastRefreshed = data["Meta Data"]["3. Last Refreshed"];
-      //         var stockOpen =
-      //           data["Time Series (Daily)"][lastRefreshed]["1. open"];
-      //         var stockHigh =
-      //           data["Time Series (Daily)"][lastRefreshed]["2. high"];
-      //         var stockLow =
-      //           data["Time Series (Daily)"][lastRefreshed]["3. low"];
-      //         var stockClose =
-      //           data["Time Series (Daily)"][lastRefreshed]["4. close"];
-      //         var lastVolume =
-      //           data["Time Series (Daily)"][lastRefreshed]["5. volume"];
-
-      //         $("#stockSymbol").html(symbol);
-      //         $("#lastRefreshed").html(lastRefreshed);
-      //         $("#stockOpen").html(stockOpen);
-      //         $("#stockHigh").html(stockHigh);
-      //         $("#stockLow").html(stockLow);
-      //         $("#stockClose").html(stockClose);
-      //         $("#stockVolume").html(lastVolume);
-      //         console.log(data);
-      //       },
-      //     });
-      //   } else {
-      //   }
-      // }
       function getprice() {
         //read the value of the selected company
-        var selectOption = $("#companyList").val();
-
+        let selectOption = $("#companyList").val();
         if (selectOption != "") {
-          //get the price through the api
+          //get the price trought the api
           let url =
             "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=" +
             selectOption +
             "&apikey=0QOS7RCBX2UGWAC3";
-          //use ajax agent to get the response
-          if (window.XMLHttpRequest) var agent = new XMLHttpRequest();
-          else var agent = new ActiveXObject("Microsoft.XMLHTTP");
+          $.ajax({
+            url: url,
+            dataType: "json",
+            contentType: "application/json",
+            success: function (data) {
+              var symbol = data["Meta Data"]["2. Symbol"];
+              var lastRefreshed = data["Meta Data"]["3. Last Refreshed"];
+              var stockOpen =
+                data["Time Series (Daily)"][lastRefreshed]["1. open"];
+              var stockHigh =
+                data["Time Series (Daily)"][lastRefreshed]["2. high"];
+              var stockLow =
+                data["Time Series (Daily)"][lastRefreshed]["3. low"];
+              var stockClose =
+                data["Time Series (Daily)"][lastRefreshed]["4. close"];
+              var lastVolume =
+                data["Time Series (Daily)"][lastRefreshed]["5. volume"];
 
-          //open file
-          agent.open("GET", url, true);
-          agent.send(null);
-
-          agent.onreadystatechange = function () {
-            if (agent.readyState == 4 && agent.status == 200) {
-              var serverResponse = agent.responseText;
-              $("#showsymbol").html(selectOption);
-
-              //treat serverresponse as a big string with elemets sparate by ":"
-              var closeprice = serverResponse.split(":")[12].split(",")[0];
-
-              $("#showprice").html(serverResponse);
-            }
-          };
+              $("#stockSymbol").html(symbol);
+              $("#lastRefreshed").html(lastRefreshed);
+              $("#stockOpen").html(stockOpen);
+              $("#stockHigh").html(stockHigh);
+              $("#stockLow").html(stockLow);
+              $("#stockClose").html(stockClose);
+              $("#stockVolume").html(lastVolume);
+              console.log(data);
+            },
+          });
         } else {
         }
-      } //end of function getprice()
+      }
     </script>
   </head>
 
