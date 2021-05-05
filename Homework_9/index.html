@@ -38,13 +38,6 @@
             "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=" +
             selectOption +
             "&apikey=0QOS7RCBX2UGWAC3";
-          // console.log(apiPrice);
-          // //use ajax agent to get the response
-          // let agent = new XMLHttpRequest();
-
-          // //open file
-          // agent.open("GET", url, true);
-          // agent.send(null);
           $.ajax({
             url: url,
             dataType: "json",
@@ -96,10 +89,10 @@
     <div class="stock">
       <p>Stock Symbol: <span id="stockSymbol"></span></p>
       <p>Last Refreshed: <span id="lastRefreshed"></span></p>
-      <p>Stock Close: <span id="stockOpen"></span></p>
       <p>Stock Open: <span id="stockHigh"></span></p>
       <p>Stock High: <span id="stockLow"></span></p>
       <p>Stock low: <span id="stockClose"></span></p>
+      <p>Stock Close: <span id="stockOpen"></span></p>
       <p>Stock Volume: <span id="stockVolume"></span></p>
     </div>
   </body>
